@@ -26,3 +26,21 @@ test("the page does not say public rates, no key", () => {
   assert.equal(/public rates/i.test(html), false);
   assert.equal(/no key/i.test(html), false);
 });
+
+test("panel notes use a soft hairline and muted type in both schemes", () => {
+  const css = readFileSync("web/styles.css", "utf8");
+  const hintStart = css.indexOf(".hint {");
+  const hint = css.slice(hintStart, css.indexOf("}", hintStart));
+  assert.match(css, /--muted:\s*#3a3a3a/);
+  assert.match(css, /--line:\s*#000/);
+  assert.match(css, /--soft:\s*#d8d8d8/);
+  assert.match(css, /@media \(prefers-color-scheme: dark\)/);
+  assert.match(css, /--muted:\s*#c6c6c6/);
+  assert.match(css, /--line:\s*#fff/);
+  assert.match(css, /--soft:\s*#2a2a2a/);
+  assert.match(hint, /border-top:\s*1px solid var\(--soft\)/);
+  assert.match(hint, /color:\s*var\(--muted\)/);
+  assert.match(hint, /font-size:\s*11px/);
+  assert.match(hint, /line-height:\s*1\.6/);
+  assert.match(css, /border-top:\s*1px solid var\(--line\)/);
+});
