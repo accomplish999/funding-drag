@@ -1,6 +1,6 @@
 # funding-drag
 
-<p><a href="https://accompli.sh"><img src="web/accomplish-pill.png" alt="Accomplish" height="48" /></a></p>
+<p><a href="https://accompli.sh"><img src="https://accompli.sh/brand/pill-flat.png" alt="Accomplish" height="48" /></a></p>
 
 The cost of holding the perp.
 
