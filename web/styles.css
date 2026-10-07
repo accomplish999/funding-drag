@@ -2,6 +2,9 @@
   color-scheme: light;
   --ink: #000;
   --paper: #fff;
+  --muted: #3a3a3a;
+  --line: #000;
+  --soft: #d8d8d8;
   --dither: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' shape-rendering='crispEdges'><rect width='1' height='1' fill='%23000'/><rect x='2' y='2' width='1' height='1' fill='%23000'/></svg>");
   --checker: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' shape-rendering='crispEdges'><rect width='2' height='2' fill='%23000'/><rect x='2' y='2' width='2' height='2' fill='%23000'/></svg>");
 }
@@ -67,14 +70,14 @@ select {
 }
 
 input[type="checkbox"] {
-  accent-color: #000;
+  accent-color: var(--ink);
   width: 14px;
   height: 14px;
 }
 
 ::selection {
-  color: #fff;
-  background: #000;
+  color: var(--paper);
+  background: var(--ink);
 }
 
 .band {
@@ -86,19 +89,19 @@ input[type="checkbox"] {
 }
 
 header {
-  background: var(--ink);
-  color: var(--paper);
+  background: #000;
+  color: #fff;
   padding: 28px 0;
 }
 
 header a,
 footer a {
-  color: var(--paper);
+  color: #fff;
 }
 
 header a:focus-visible,
 footer a:focus-visible {
-  outline: 2px solid var(--paper);
+  outline: 2px solid #fff;
   outline-offset: 3px;
 }
 
@@ -239,8 +242,12 @@ select {
 }
 
 .hint {
-  margin: 8px 0 0;
-  font-size: 12px;
+  margin: 16px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--soft);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.6;
 }
 
 .out .hero {
@@ -266,7 +273,7 @@ table {
 th,
 td {
   text-align: left;
-  border-top: 1px solid var(--ink);
+  border-top: 1px solid var(--line);
   padding: 6px 6px 6px 0;
   font-weight: 400;
   vertical-align: top;
@@ -291,8 +298,8 @@ footer {
   right: 0;
   bottom: 0;
   z-index: 4;
-  background: var(--ink);
-  color: var(--paper);
+  background: #000;
+  color: #fff;
   font-size: 12px;
 }
 
@@ -343,5 +350,22 @@ footer {
     flex-direction: column;
     align-items: flex-start;
     gap: 4px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --ink: #fff;
+    --paper: #000;
+    --muted: #c6c6c6;
+    --line: #fff;
+    --soft: #2a2a2a;
+    --dither: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' shape-rendering='crispEdges'><rect width='1' height='1' fill='%23fff'/><rect x='2' y='2' width='1' height='1' fill='%23fff'/></svg>");
+    --checker: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4' shape-rendering='crispEdges'><rect width='2' height='2' fill='%23fff'/><rect x='2' y='2' width='2' height='2' fill='%23fff'/></svg>");
+  }
+
+  select {
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='8' height='6' shape-rendering='crispEdges'><polygon points='0,0 8,0 4,6' fill='%23fff'/></svg>");
   }
 }
