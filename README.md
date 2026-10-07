@@ -8,9 +8,9 @@ Funding is a fraction of notional, on a clock. A positive print means longs pay 
 
 The hosted calculator is <https://accompli.sh/funding-drag>.
 
-The shot is one load of that page on 2026-10-07. A later load will differ. [Live check](#live-check) is a different fetch.
+The shot is one load of that page at 2026-10-07T17:49:45Z. Venues on are OKX, Hyperliquid, dYdX, Gate, and Bitget. A later load will differ. [Live check](#live-check) is a different fetch.
 
-![Hosted page, 2026-10-07. BTC long, notional 10000, leverage 5, hold 24 hours, target 1 percent, fees 0.0005. Entry 83046.9 filled from the OKX mark. Gate funding -0.03, so you receive, and hours is none. OKX 0.24423339, dYdX 1.312143, Bitget 3, Hyperliquid 3. Binance and Bybit failed to fetch. On Gate the current rate and the trailing average have opposite signs. Copy link sits by the kicker.](docs/images/calc.png)
+![Hosted page at 2026-10-07T17:49:45Z. BTC long, notional 10000, leverage 5, hold 24 hours, target 1 percent, fees 0.0005. Entry 83145 filled from the OKX mark. Venues on: OKX, Hyperliquid, dYdX, Gate, Bitget. Cheapest is Gate, margin 2000. Gate is flat: funding 0, carry 0, move 0.0010005, hours none. OKX funding 0.29962461, carry -0.0109363, move 0.00103048, hours 8010.023. dYdX funding 1.14551, carry -0.04181112, move 0.00111511, hours 2095.1363. Bitget and Hyperliquid funding 3, carry -0.1095, move 0.00130065, hours 800. Copy link sits by the kicker.](docs/images/calc.png)
 
 This is arithmetic on published rates. It is not a signal, and it is not advice. Past funding does not predict the next interval.
 
