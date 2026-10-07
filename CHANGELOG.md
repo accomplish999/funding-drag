@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Page: results are easy to read on a phone. Under 560px each venue is a card, cheapest first, with a cost bar against the most expensive venue and a CHEAPEST tag. A one-line takeaway is computed from the results. Funding shows as money, carry as a yearly percent with a real minus sign, move as a percent, and hours as days and hours or never. Inputs are 16px.
+
 ## 0.1.0
 
 First public release.
