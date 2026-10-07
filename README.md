@@ -6,7 +6,7 @@ The cost of holding the perp.
 
 Funding is a fraction of notional, on a clock. A positive print means longs pay shorts. This tool turns that print into quote over the hold you typed, a trailing average of the settled prints, the price move that covers the funding plus the fees you typed, the annualized carry, the hours until funding spends a target, and a rank of the venues that answered.
 
-The hosted calculator is <https://accomplish999.github.io/funding-drag/>.
+The hosted calculator is <https://accompli.sh/funding-drag>.
 
 This is arithmetic on published rates. It is not a signal, and it is not advice. Past funding does not predict the next interval.
 
@@ -387,7 +387,7 @@ const live = await fundingDrag({
 
 The same functions run in the browser. The page requests public funding routes for the venues you leave checked. It does not send the position anywhere else.
 
-Hosted copy: <https://accomplish999.github.io/funding-drag/>.
+Hosted copy: <https://accompli.sh/funding-drag>.
 
 Locally, `npm run build:web` writes `web/funding-drag.js`. Open [web/index.html](web/index.html) after that. The page needs JavaScript. The CLI does not, if you pass a file that already contains quotes.
 

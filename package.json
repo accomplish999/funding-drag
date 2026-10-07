@@ -23,7 +23,7 @@
     "type": "git",
     "url": "git+https://github.com/accomplish999/funding-drag.git"
   },
-  "homepage": "https://accomplish999.github.io/funding-drag/",
+  "homepage": "https://accompli.sh/funding-drag",
   "scripts": {
     "build": "tsc --pretty false && npm run build:web",
     "build:web": "esbuild src/browser.ts --bundle --format=iife --global-name=FundingDrag --outfile=web/funding-drag.js --legal-comments=none",
