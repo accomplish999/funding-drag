@@ -257,24 +257,6 @@ select {
   text-transform: uppercase;
 }
 
-.warning {
-  background: var(--ink);
-  color: var(--paper);
-  padding: 12px;
-  margin: 0 0 12px;
-}
-
-.warning p,
-.note p {
-  margin: 0;
-}
-
-.note {
-  border: 1px solid var(--ink);
-  padding: 8px 10px;
-  margin: 0 0 8px;
-}
-
 table {
   width: 100%;
   border-collapse: collapse;
@@ -301,12 +283,6 @@ td.num,
 th.num {
   text-align: right;
   font-variant-numeric: tabular-nums;
-}
-
-.err {
-  border: 1px solid var(--ink);
-  padding: 10px;
-  margin: 0;
 }
 
 footer {
