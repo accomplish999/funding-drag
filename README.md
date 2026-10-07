@@ -1,12 +1,16 @@
 # funding-drag
 
-<p><a href="https://accompli.sh"><img src="https://accompli.sh/brand/pill-flat.png" alt="Accomplish" height="48" /></a></p>
+<p><a href="https://accompli.sh"><img src="docs/images/accomplish-pill.png" alt="Accomplish" height="48" /></a></p>
 
 The cost of holding the perp.
 
 Funding is a fraction of notional, on a clock. A positive print means longs pay shorts. This tool turns that print into quote over the hold you typed, a trailing average of the settled prints, the price move that covers the funding plus the fees you typed, the annualized carry, the hours until funding spends a target, and a rank of the venues that answered.
 
 The hosted calculator is <https://accompli.sh/funding-drag>.
+
+The shot is one load of that page on 2026-10-07. A later load will differ. [Live check](#live-check) is a different fetch.
+
+![Hosted page, 2026-10-07. BTC long, notional 10000, leverage 5, hold 24 hours, target 1 percent, fees 0.0005. Entry 83046.9 filled from the OKX mark. Gate funding -0.03, so you receive, and hours is none. OKX 0.24423339, dYdX 1.312143, Bitget 3, Hyperliquid 3. Binance and Bybit failed to fetch. On Gate the current rate and the trailing average have opposite signs. Copy link sits by the kicker.](docs/images/calc.png)
 
 This is arithmetic on published rates. It is not a signal, and it is not advice. Past funding does not predict the next interval.
 
@@ -18,6 +22,7 @@ This is arithmetic on published rates. It is not a signal, and it is not advice.
 - [Exact rules](#exact-rules)
 - [Data and method](#data-and-method)
 - [Worked results](#worked-results)
+- [Historical check](#historical-check)
 - [Limitations](#limitations)
 - [Failure modes](#failure-modes)
 - [When not to use it](#when-not-to-use-it)
@@ -290,6 +295,76 @@ This is a calculation. It is not a signal.
 ```
 
 `--strict` prints the same text and exits 3. Breakeven is 103000 because 300 quote of funding on 0.1 base is 3,000 points and the fees are zero.
+
+## Historical check
+
+One OKX BTC-USDT-SWAP long, held for the 2026-09-03 UTC day. Entry is that day's open. The chart draws that long. The funding figures below are this repository's formulas on the notional in this section.
+
+![OKX BTCUSDT perp, daily candles. Long from 77,303.7 on 3 Sep 2026. Stop 76,204.5 at the prior day's low. TP1 81,228.7 closes 50 percent and TP2 82,279.9 closes 50 percent. Liquidation at 10x is 69,852.7, under the stop.](docs/images/tv-perp-long.png)
+
+Fetched 2026-10-07 from the public OKX API. No key.
+
+Candles: `GET /api/v5/market/history-candles?instId=BTC-USDT-SWAP&bar=1Dutc&after=1788566400000&before=1788220800000`. Candle `1788393600000` (2026-09-03 00:00 UTC): open 77303.7, high 82279.9, low 76926, close 81228.7. Prior candle `1788307200000`: low 76204.5.
+
+Funding: `GET /api/v5/public/funding-rate-history?instId=BTC-USDT-SWAP&after=1788566400000&before=1788307200000`. The field is `realizedRate`.
+
+The position opens at 77303.7. The hold is 24 hours, through 2026-09-04 00:00 UTC. The settlement at the open, fundingTime `1788393600000`, rate 0.0000583196496528, is the print for the interval that ended then. The flat projection holds that print for three 8 hour intervals. Opened on that print, the position pays the next three settlements if it is still open at each timestamp:
+
+| fundingTime   | UTC              | realizedRate       |
+| ------------- | ---------------- | ------------------ |
+| 1788422400000 | 2026-09-03 08:00 | 0.0000457850394567 |
+| 1788451200000 | 2026-09-03 16:00 | 0.0000383236146165 |
+| 1788480000000 | 2026-09-04 00:00 | 0.0000418741079605 |
+
+Those three rates sum to 0.0001259827620337.
+
+The stop on the chart is the prior day's low, 76204.5. TP1 is the day's close, 81228.7. TP2 is the day's high, 82279.9. The day's low was 76926, above the stop. The chart marks liquidation at 69852.7 for a 10x cap. This tool does not compute liquidation.
+
+The notional is an input, not a live account. The risk budget is 100 quote, 1 percent of 10,000. Fees are 0. OKX fees depend on the account tier, and this note does not pick a tier. Leverage is 10, the cap on the chart. Margin is notional divided by 10. Funding does not use that 10.
+
+```text
+gap       = 77303.7 - 76204.5
+unit loss = gap + 0.0000583196496528 * (24 / 8) * 77303.7
+          = 1112.7249741025926
+qty       = 100 / 1112.7249741025926
+          = 0.08986946669427415
+notional  = 0.08986946669427415 * 77303.7
+          = 6947.24229249416
+margin    = 6947.24229249416 / 10
+          = 694.724229249416
+```
+
+The gap prints as 1099.2. Quantity prints as 0.08986947. Notional prints as 6947.2423. Margin prints as 694.724229.
+
+The unit loss includes the flat funding, so the 100 quote budget is the loss at the stop after that funding. This repository does not size the trade. It prices the funding on that notional. Printed figures are `roundTrip`. The rate strings are the OKX fields. The products below are the doubles those formulas return.
+
+Flat funding for a long:
+
+```text
+0.0000583196496528 * 6947.24229249416 * (24 / 8) = 1.2154822096541236
+```
+
+That prints as 1.215482. Carry, no compounding:
+
+```text
+-0.0000583196496528 * (8760 / 8) = -0.063860016369816
+```
+
+That prints as -0.06386002. With fees at 0, breakeven is entry plus the funding quote over qty:
+
+```text
+77303.7 + 1.2154822096541236 / 0.08986946669427415 = 77317.2249741026
+```
+
+That prints as 77317.225. The favorable move prints as 0.00017496. The target is 1 percent of notional, 69.472423 quote. At the flat rate the target lasts 1371.7504 hours. The hold is 24 hours, so the target is still there at the end.
+
+The three in-hold rates, one interval each, are the same identity with the sum in place of three times the open print:
+
+```text
+6947.24229249416 * 0.0001259827620337 = 0.8752327725257482
+```
+
+That prints as 0.87523277. The flat projection is 0.34024944 quote more than those three charges. The mean of the three rates is 0.00004199425401123334, which prints as 0.00004199. On that mean, carry prints as -0.04598371, breakeven as 77313.4389, the move as 0.00012598, and hours to the 1 percent target as 1905.0225.
 
 ## Limitations
 
