@@ -1,0 +1,12 @@
+name: Question
+description: A question about a formula, a flag, or a venue print.
+title: ""
+labels: []
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: Question
+      description: Include the command and the output if you have them.
+    validations:
+      required: true

@@ -1,0 +1,40 @@
+{
+  "asset": "BTC",
+  "side": "long",
+  "notional": 10000,
+  "entry": 100000,
+  "leverage": 10,
+  "holdHours": 24,
+  "entryFeeRate": 0.0005,
+  "exitFeeRate": 0.0005,
+  "targetProfit": { "mode": "percent", "value": 1 },
+  "historyWindowHours": 168,
+  "quotes": [
+    {
+      "venue": "okx",
+      "symbol": "BTC-USDT-SWAP",
+      "intervalHours": 8,
+      "currentRate": 0.0001,
+      "currentRateKind": "predicted",
+      "markPrice": 100000,
+      "history": [
+        { "timeMs": 1791360000000, "rate": 0.0001 },
+        { "timeMs": 1791331200000, "rate": 0.0001 },
+        { "timeMs": 1791302400000, "rate": 0.0001 }
+      ]
+    },
+    {
+      "venue": "hyperliquid",
+      "symbol": "BTC",
+      "intervalHours": 1,
+      "currentRate": 0.00001,
+      "currentRateKind": "predicted",
+      "markPrice": 100010,
+      "history": [
+        { "timeMs": 1791360000000, "rate": 0.00001 },
+        { "timeMs": 1791356400000, "rate": 0.00001 },
+        { "timeMs": 1791352800000, "rate": 0.00001 }
+      ]
+    }
+  ]
+}

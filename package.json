@@ -1,0 +1,47 @@
+{
+  "name": "funding-drag",
+  "version": "0.1.0",
+  "description": "The cost of holding a crypto perpetual.",
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "funding-drag": "./dist/src/cli.js"
+  },
+  "main": "./dist/src/index.js",
+  "files": [
+    "dist",
+    "docs",
+    "web",
+    "examples",
+    "LICENSE",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/accomplish999/funding-drag.git"
+  },
+  "homepage": "https://accomplish999.github.io/funding-drag/",
+  "scripts": {
+    "build": "tsc --pretty false && npm run build:web",
+    "build:web": "esbuild src/browser.ts --bundle --format=iife --global-name=FundingDrag --outfile=web/funding-drag.js --legal-comments=none",
+    "typecheck": "tsc --noEmit --pretty false",
+    "lint": "prettier --check . && markdownlint-cli2",
+    "format": "prettier --write .",
+    "test": "node --import tsx --test test/*.test.ts",
+    "smoke": "tsx scripts/smoke.ts",
+    "links": "tsx scripts/check-links.ts",
+    "copy": "tsx scripts/check-copy.ts",
+    "start": "tsx src/cli.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.3",
+    "esbuild": "^0.25.5",
+    "markdownlint-cli2": "^0.23.3",
+    "prettier": "^3.5.3",
+    "tsx": "^4.19.4",
+    "typescript": "^5.8.3"
+  }
+}

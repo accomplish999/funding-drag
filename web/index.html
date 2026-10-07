@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>funding-drag</title>
+    <meta name="description" content="The cost of holding a crypto perpetual." />
+    <meta name="theme-color" content="#000000" />
+    <meta name="color-scheme" content="light" />
+    <link rel="icon" href="favicon.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <div class="hero-bar">
+        <div class="hero-copy">
+          <p class="kicker">funding-drag</p>
+          <h1>The cost of the hold.</h1>
+          <p class="sub">
+            Live funding in. Carry, breakeven, and the cheapest venue out. A positive rate means longs pay shorts.
+          </p>
+        </div>
+        <a class="brand" href="https://accompli.sh"
+          ><img src="accomplish-pill.png" alt="Accomplish" width="2172" height="724"
+        /></a>
+      </div>
+    </header>
+    <div class="band" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="tabbar">
+        <p class="kicker">Public rates. No key.</p>
+        <button type="button" id="copy-link">Copy link</button>
+      </div>
+      <div class="layout">
+        <form class="panel" id="form">
+          <h2>Inputs</h2>
+          <div class="grid">
+            <label><span>Asset</span><input id="asset" value="BTC" autocomplete="off" /></label>
+            <label>
+              <span>Side</span>
+              <select id="side">
+                <option value="long" selected>Long</option>
+                <option value="short">Short</option>
+              </select>
+            </label>
+            <label><span>Notional (quote)</span><input id="notional" value="10000" inputmode="decimal" /></label>
+            <label><span>Qty (base, optional)</span><input id="qty" value="" inputmode="decimal" /></label>
+            <label
+              ><span>Entry</span><input id="entry" value="" inputmode="decimal" placeholder="mark if empty"
+            /></label>
+            <label><span>Leverage</span><input id="leverage" value="5" inputmode="decimal" /></label>
+            <label><span>Hold hours</span><input id="hold" value="24" inputmode="decimal" /></label>
+            <label><span>Target (1 means 1%)</span><input id="target" value="1" inputmode="decimal" /></label>
+            <label><span>Entry fee</span><input id="entry-fee" value="0.0005" inputmode="decimal" /></label>
+            <label><span>Exit fee</span><input id="exit-fee" value="0.0005" inputmode="decimal" /></label>
+          </div>
+          <span>Venues</span>
+          <div class="venues" id="venues"></div>
+          <div class="actions">
+            <button type="submit" id="calc">Calculate</button>
+            <button type="button" id="ex-long">Example: 24h long</button>
+          </div>
+          <p class="hint">
+            Fees are fractions. 0.0005 is 5 basis points, applied on every venue. Funding is charged on notional.
+            Leverage does not scale it. 1 in the target field means 1 percent of notional. An empty entry uses the first
+            mark the venues return.
+          </p>
+        </form>
+        <div class="panel out" id="out" aria-live="polite"></div>
+      </div>
+    </div>
+    <footer>
+      <div class="band" aria-hidden="true"></div>
+      <div class="foot-bar">
+        <p>Not financial advice. Past results do not predict future results.</p>
+        <p>
+          The page requests public funding rates.
+          <a href="https://github.com/accomplish999/funding-drag/blob/main/docs/FUNDING.md">Formulas</a>
+          <a href="https://github.com/accomplish999/funding-drag">Source</a>
+          MIT
+        </p>
+      </div>
+    </footer>
+    <noscript
+      >This page needs JavaScript to fetch rates and run the calculator. The CLI can also read a file with no
+      network.</noscript
+    >
+    <script src="funding-drag.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
