@@ -27,17 +27,10 @@
     return text.includes(".") ? text.replace(/\.?0+$/, "") : text;
   }
 
-  function render(result, entryNote) {
+  function render(result) {
     const focus = result.venues.find((venue) => venue.venue === result.focus) || result.venues[0];
     const funding = focus.current.fundingQuote;
     const verb = funding > 0 ? "you pay" : funding < 0 ? "you receive" : "flat";
-    const warnings = result.warnings
-      .map((warning) => {
-        const cls = warning.severity === "loud" ? "warning" : "note";
-        const tag = warning.severity === "loud" ? "Warning" : "Note";
-        return `<div class="${cls}"><p>${tag}: ${escapeText(warning.message)}</p></div>`;
-      })
-      .join("");
     const rows = result.venues
       .map(
         (venue) => `<tr>
@@ -49,9 +42,7 @@
         </tr>`,
       )
       .join("");
-    const note = entryNote ? `<div class="note"><p>${escapeText(entryNote)}</p></div>` : "";
-    $("out").innerHTML = `${warnings}${note}
-      <p class="hero">${roundTrip(funding)}</p>
+    $("out").innerHTML = `<p class="hero">${roundTrip(funding)}</p>
       <p class="hero-label">${escapeText(verb)} on ${escapeText(focus.venue)} over ${roundTrip(result.holdHours)} hours</p>
       <p>Cheapest: ${escapeText(result.cheapest)}. Notional ${roundTrip(result.notional)}. Margin ${roundTrip(result.margin)}. Entry ${roundTrip(result.entry)}.</p>
       <table>
@@ -68,10 +59,17 @@
     );
   }
 
+  function noRates() {
+    $("out").textContent = "No rates available right now. Try again.";
+  }
+
   function fail(err) {
-    const code = err && err.code ? err.code : "ERROR";
-    const message = err && err.message ? err.message : String(err);
-    $("out").innerHTML = `<p class="err">${escapeText(code)}: ${escapeText(message)}</p>`;
+    const code = err && err.code;
+    if (!code || code === "ALL_VENUES_UNAVAILABLE" || code === "NO_QUOTES") {
+      noRates();
+      return;
+    }
+    $("out").textContent = err.message;
   }
 
   async function calculate() {
@@ -80,23 +78,18 @@
     const venues = selectedVenues();
     const loaded = await FD.loadQuotes(asset, venues);
     if (!loaded.quotes.length) {
-      const detail = loaded.failures.map((failure) => `${failure.venue}: ${failure.message}`).join(" ");
-      const err = new Error(detail || "No venue returned a funding rate.");
-      err.code = "ALL_VENUES_UNAVAILABLE";
-      throw err;
+      noRates();
+      return;
     }
     let entry = num("entry");
-    let entryNote = "";
     if (entry === undefined) {
       const marked = loaded.quotes.find((quote) => Number.isFinite(quote.markPrice) && quote.markPrice > 0);
       if (!marked) {
-        const err = new Error("Pass an entry. No venue returned a mark.");
-        err.code = "MISSING";
-        throw err;
+        noRates();
+        return;
       }
       entry = marked.markPrice;
       $("entry").value = String(entry);
-      entryNote = `Entry was filled from the ${marked.venue} mark. It is not a fill.`;
     }
     const input = {
       asset,
@@ -112,8 +105,8 @@
     const qty = num("qty");
     if (notional !== undefined) input.notional = notional;
     if (qty !== undefined) input.qty = qty;
-    const result = FD.projectFunding(input, loaded.quotes, { failures: loaded.failures });
-    render(result, entryNote);
+    const result = FD.projectFunding(input, loaded.quotes);
+    render(result);
   }
 
   function readHash() {

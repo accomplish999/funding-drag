@@ -8,9 +8,9 @@ Funding is a fraction of notional, on a clock. A positive print means longs pay 
 
 The hosted calculator is <https://accompli.sh/funding-drag>.
 
-The shot is one load of that page at 2026-10-07T17:49:45Z. Venues on are OKX, Hyperliquid, dYdX, Gate, and Bitget. A later load will differ. [Live check](#live-check) is a different fetch.
+The shot is the built page at 2026-10-07T18:23:21Z. Every venue is checked. Binance and Bybit did not answer, so they are not in the table. A later load will differ. [Live check](#live-check) is a different fetch.
 
-![Hosted page at 2026-10-07T17:49:45Z. BTC long, notional 10000, leverage 5, hold 24 hours, target 1 percent, fees 0.0005. Entry 83145 filled from the OKX mark. Venues on: OKX, Hyperliquid, dYdX, Gate, Bitget. Cheapest is Gate, margin 2000. Gate is flat: funding 0, carry 0, move 0.0010005, hours none. OKX funding 0.29962461, carry -0.0109363, move 0.00103048, hours 8010.023. dYdX funding 1.14551, carry -0.04181112, move 0.00111511, hours 2095.1363. Bitget and Hyperliquid funding 3, carry -0.1095, move 0.00130065, hours 800. Copy link sits by the kicker.](docs/images/calc.png)
+![Built page at 2026-10-07T18:23:21Z. BTC long, notional 10000, leverage 5, hold 24 hours, target 1 percent, fees 0.0005. Entry 83238.6. Every venue checked. Cheapest is OKX, margin 2000. OKX funding 0.52811055, carry -0.01927604, move 0.00105334, hours 4544.503. Gate funding 0.72, carry -0.02628, move 0.00107254, hours 3333.3333. dYdX funding 1.53, carry -0.055845, move 0.00115358, hours 1568.6275. Bitget and Hyperliquid funding 3, carry -0.1095, move 0.00130065, hours 800. Copy link is on the right.](docs/images/calc.png)
 
 This is arithmetic on published rates. It is not a signal, and it is not advice. Past funding does not predict the next interval.
 
@@ -466,7 +466,7 @@ Hosted copy: <https://accompli.sh/funding-drag>.
 
 Locally, `npm run build:web` writes `web/funding-drag.js`. Open [web/index.html](web/index.html) after that. The page needs JavaScript. The CLI does not, if you pass a file that already contains quotes.
 
-The form starts as BTC, long, notional 10,000, leverage 5, hold 24 hours, target 1, fees 0.0005. Entry is empty, so the first mark that comes back fills it and the page says so. `Example: 24h long` restores that and fetches again. `Copy link` writes the fields into the URL hash and copies that URL. A hash is not sent with the page request.
+The form starts as BTC, long, notional 10,000, leverage 5, hold 24 hours, target 1, fees 0.0005. Entry is empty, so the first mark that comes back fills the field. A venue that does not answer is left out of the table. If none answer, the page says no rates are available. `Example: 24h long` restores the form and fetches again. `Copy link` writes the fields into the URL hash and copies that URL. A hash is not sent with the page request.
 
 On this form, 1 in the target field means 1 percent. Fees are fractions.
 
