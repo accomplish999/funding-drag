@@ -20,3 +20,9 @@ test("the page does not print venue or entry notes", () => {
 test("the page has one plain line when every venue fails", () => {
   assert.equal(page.includes("No rates available right now. Try again."), true);
 });
+
+test("the page does not say public rates, no key", () => {
+  const html = readFileSync("web/index.html", "utf8");
+  assert.equal(/public rates/i.test(html), false);
+  assert.equal(/no key/i.test(html), false);
+});
