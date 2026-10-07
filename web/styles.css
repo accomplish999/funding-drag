@@ -177,6 +177,13 @@ header h1 {
   padding: 14px;
 }
 
+/* Results switch between a table and cards by the width they get. */
+.out {
+  container: fdout / inline-size;
+  min-width: 0;
+  overflow-x: auto;
+}
+
 .panel h2 {
   margin: 0 0 12px;
   font-size: 13px;
@@ -201,6 +208,7 @@ input,
 select {
   width: 100%;
   padding: 7px 8px;
+  font-size: 16px;
 }
 
 .grid {
@@ -290,6 +298,189 @@ td.num,
 th.num {
   text-align: right;
   font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Results ---------- */
+
+.out .hero,
+.fd-summary,
+.fd-cards,
+.fd-table {
+  font-variant-numeric: tabular-nums;
+}
+
+.fd-summary {
+  margin: 0 0 4px;
+}
+
+.fd-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.fd-tag {
+  display: inline-block;
+  padding: 2px 5px 1px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+
+/* Cost bar: ink for a cost, hatched outline for funding you receive.
+   The left edge is the zero line. */
+.fd-bar {
+  position: relative;
+  display: block;
+  height: 8px;
+  border-left: 1px solid var(--ink);
+  background: var(--soft);
+}
+
+.fd-bar i {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+}
+
+.fd-bar.neg i {
+  border: 1px solid var(--ink);
+  background: repeating-linear-gradient(-45deg, var(--ink) 0 1px, var(--paper) 1px 4px);
+}
+
+/* Cards: the phone view. */
+.fd-cards {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+}
+
+.fd-card {
+  padding: 12px 0 13px;
+}
+
+.fd-card + .fd-card {
+  border-top: 1px solid var(--soft);
+}
+
+.fd-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+
+.fd-rank {
+  min-width: 1.4em;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.fd-venue {
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.fd-cost {
+  margin-left: auto;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+
+.fd-card .fd-bar {
+  margin: 9px 0 10px;
+}
+
+.fd-kv {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+  margin: 0;
+}
+
+.fd-kv dt {
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.fd-kv dd {
+  margin: 1px 0 0;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.fd-kv small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+/* Table: the wide view. Nothing inside a cell wraps. */
+.fd-table {
+  display: none;
+}
+
+.fd-table td,
+.fd-table th {
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.fd-table td.fd-venue .fd-tag {
+  margin-left: 6px;
+}
+
+.fd-fund {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fd-fund .fd-bar {
+  flex: 0 0 48px;
+  height: 6px;
+}
+
+.fd-takeaway {
+  margin: 14px 0 0;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+@media (min-width: 560px) {
+  .fd-cards {
+    display: none;
+  }
+
+  .fd-table {
+    display: table;
+  }
+}
+
+/* A narrow results panel (two columns on a small laptop) gets cards too. */
+@container fdout (max-width: 419.98px) {
+  .fd-cards {
+    display: block;
+  }
+
+  .fd-table {
+    display: none;
+  }
 }
 
 footer {
