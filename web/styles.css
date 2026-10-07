@@ -172,9 +172,9 @@ header h1 {
   align-items: start;
 }
 
+/* Columns sit on the paper. No box around a column of controls or results. */
 .panel {
-  border: 1px solid var(--ink);
-  padding: 14px;
+  min-width: 0;
 }
 
 /* Results switch between a table and cards by the width they get. */
@@ -249,13 +249,15 @@ select {
   margin-top: 6px;
 }
 
+/* Explanatory notes are serif body copy, not mono prose. */
 .hint {
-  margin: 16px 0 0;
-  padding-top: 12px;
-  border-top: 1px solid var(--soft);
+  max-width: 36rem;
+  margin: 24px 0 0;
   color: var(--muted);
-  font-size: 11px;
-  line-height: 1.6;
+  font-family: "Newsreader", Georgia, "Times New Roman", serif;
+  font-size: 16px;
+  line-height: 1.5;
+  text-wrap: pretty;
 }
 
 .out .hero {
@@ -360,18 +362,12 @@ th.num {
 /* Cards: the phone view. */
 .fd-cards {
   list-style: none;
-  margin: 14px 0 0;
+  margin: 16px 0 0;
   padding: 0;
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
-}
-
-.fd-card {
-  padding: 12px 0 13px;
 }
 
 .fd-card + .fd-card {
-  border-top: 1px solid var(--soft);
+  margin-top: 24px;
 }
 
 .fd-head {
